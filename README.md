@@ -1,48 +1,128 @@
-Assignment 5: Bash Scripting Suite for System
-Maintenance
-Course: Linux OS + LSP
-Student Name: [Your Name]
-Date: [Insert Date]
+# 🌟 System Maintenance Suite (Bash Script)
 
-1. Objective
-To design and implement a Bash scripting suite in Linux that automates key system
-maintenance tasks such as performing backups, updates, and log monitoring to enhance
-system reliability and reduce manual effort.
+A fully automated *System Maintenance Suite* written in Bash, designed to help Linux users perform routine system maintenance tasks such as *backups, **system updates, **cleanup, and **real-time log monitoring* with color-coded output, animations, and logging.
 
-2. Introduction
-Linux provides a powerful command-line environment that supports Bash scripting for
-automating administrative tasks. This assignment focuses on creating a single
-menu-driven script that integrates multiple maintenance functions like backup, update, and
-log monitoring.
+---
 
-3. Concept and Tools Used
-Tools used include Bash for scripting, tar for backups, apt for system updates, grep for log
-monitoring, and simple text-based menus for user interaction.
+## 📂 Features
 
-4. Script Design
-The script combines three major functionalities: (a) Automated backups, (b) System
-update & cleanup, and (c) Log monitoring. It features colored output, logging, and robust
-error handling.
+- *System Backup*
+  - Compress and backup specified directories.
+  - Logs backup status with timestamps.
+  - Error handling for missing directories.
 
-5. Results and Observations
-Task Description Status
-Backup Created compressed archives with logs n Successful
-Update Executed system update and cleanup n Completed
-Log Monitoring Filtered and displayed live system logs n Working
+- *System Update & Cleanup*
+  - Updates system packages using apt.
+  - Cleans old packages with autoremove and autoclean.
+  - Logs update and cleanup processes.
 
-6. Advantages
-Automates repetitive administrative tasks efficiently. Ensures regular backups and system
-reliability. Reduces human error through scripting. Provides log monitoring for quick
-troubleshooting. Improves productivity and system performance.
+- *Real-time Log Monitoring*
+  - Monitors system logs for keywords: error, fail, critical, warn.
+  - Displays filtered results in real-time.
 
-7. Conclusion
-The System Maintenance Suite effectively automates essential Linux maintenance
-operations, providing a reliable and user-friendly way to manage backups, updates, and
-logs. It demonstrates practical system administration skills and reflects the importance of
-scripting in real-world IT operations.
+- *Interactive Menu*
+  - Color-coded and animated menu for easy navigation.
+  - Handles invalid input gracefully.
+
+- *Logging*
+  - Creates logs for backup and update operations for later reference.
+
+---
+
+## 🎨 Colors & Animations
+
+- Uses ANSI escape codes for colors:
+  - Red: Errors  
+  - Green: Success  
+  - Yellow: Warnings / Processing  
+  - Blue: Info  
+  - Cyan / Magenta: Menu & highlights  
+
+- Animated spinner during long-running tasks like backups and updates.
+
+---
+
+## ⚙ Configuration
+
+Before running, you may customize paths:
+
+bash
+# Directory to backup
+BACKUP_SRC="/home/$USER/Documents"
+
+# Backup storage location
+BACKUP_DEST="/home/$USER/backup"
+
+# Logs
+BACKUP_LOG="$BACKUP_DEST/backup_log.txt"
+UPDATE_LOG="/home/$USER/system_update_log.txt"
+
+# System log for monitoring
+MONITOR_LOG="/var/log/syslog"  # Use /var/log/messages if your distro differs
 
 
 
 
+## 📝 Usage
 
-  
+Clone or Download the script:
+bash
+git clone <your-repo-link>
+cd system-maintenance-suite
+
+Make the script executable:
+bash
+chmod +x maintenance_suite.sh
+
+Run the script:
+bash
+./maintenance_suite.sh
+
+Follow the menu to choose tasks:
+bash
+==============================
+  System Maintenance Suite
+==============================
+1. System Update & Cleanup
+2. Start Log Monitoring (Background)
+3. Stop Log Monitoring
+4. Backup
+5. Exit
+==============================
+Enter your choice [1-5]:
+
+
+## 🔧 Commands Used in Script
+
+- Backup:
+bash
+mkdir -p "$BACKUP_DEST"
+tar -czf "$BACKUP_DEST/backup_$TIMESTAMP.tar.gz" "$BACKUP_SRC"
+
+
+- Update & Cleanup:
+bash
+sudo apt update -y
+sudo apt upgrade -y
+sudo apt autoremove -y
+sudo apt autoclean -y
+
+- Log Monitoring:
+bash
+sudo tail -f "$MONITOR_LOG" | grep --line-buffered -iE "error|fail|critical|warn"
+
+- Spinner Animation:
+bash
+spinner() { ... }
+
+
+## ⚠ Requirements
+- Linux system (Ubuntu/Debian recommended)
+- Bash shell
+- Sudo privileges for system update and log monitoring
+- Internet connection for updates
+
+## 🚀 Notes
+- Make sure the backup destination has enough storage.
+- Stop log monitoring using Ctrl + C.
+- Customize monitored log file based on your Linux distro.
